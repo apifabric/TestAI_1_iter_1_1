@@ -1,0 +1,37 @@
+<o-form-layout-manager attr="News" mode="dialog" title="NEWS">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="NewsTable" 
+            service="News" 
+            entity="News" 
+            title="NEWS"
+            keys="id"
+            columns="id;title;content;publication_date" 
+            header-actions="R;D"
+            visible-columns="id;title;content;publication_date"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column #title attr="title" title="title" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #content attr="content" title="content" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-date-input #publication_date attr="publication_date" type="timestamp" label="publication_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

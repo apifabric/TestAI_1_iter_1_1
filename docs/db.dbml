@@ -1,0 +1,116 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table Cart {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    product_id INTEGER 
+    quantity INTEGER 
+    }
+
+Table Customer {
+    id INTEGER [primary key]
+    name VARCHAR 
+    email VARCHAR 
+    phone VARCHAR 
+    address TEXT 
+    }
+
+Table Product {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description TEXT 
+    category_id INTEGER 
+    supplier_id INTEGER 
+    price FLOAT 
+    stock_quantity INTEGER 
+    }
+
+Table Category {
+    id INTEGER [primary key]
+    name VARCHAR 
+    }
+
+Table Discount {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    description VARCHAR 
+    discount_percent FLOAT 
+    }
+
+Table News {
+    id INTEGER [primary key]
+    title VARCHAR 
+    content TEXT 
+    publication_date DATETIME 
+    }
+
+Table Order {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    order_date DATETIME 
+    total_amount FLOAT 
+    }
+
+Table OrderDetail {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    product_id INTEGER 
+    quantity INTEGER 
+    unit_price FLOAT 
+    line_total FLOAT 
+    }
+
+Table Payment {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    payment_date DATETIME 
+    amount FLOAT 
+    payment_method VARCHAR 
+    }
+
+Table Supplier {
+    id INTEGER [primary key]
+    name VARCHAR 
+    contact_info VARCHAR 
+    }
+
+Table Promotion {
+    id INTEGER [primary key]
+    name VARCHAR 
+    start_date DATETIME 
+    end_date DATETIME 
+    description TEXT 
+    }
+
+Table Review {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    product_id INTEGER 
+    rating INTEGER 
+    comment TEXT 
+    }
+
+Table Shipment {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    shipment_date DATETIME 
+    delivery_date DATETIME 
+    shipment_status VARCHAR 
+    }
+
+
+
+// Relationships
+    Ref: Cart.(customer_id) < Customer.(id)
+    Ref: Cart.(product_id) < Product.(id)
+    Ref: Product.(category_id) < Category.(id)
+    Ref: Product.(supplier_id) < Supplier.(id)
+    Ref: Discount.(product_id) < Product.(id)
+    Ref: Order.(customer_id) < Customer.(id)
+    Ref: OrderDetail.(order_id) < Order.(id)
+    Ref: OrderDetail.(product_id) < Product.(id)
+    Ref: Payment.(order_id) < Order.(id)
+    Ref: Review.(customer_id) < Customer.(id)
+    Ref: Review.(product_id) < Product.(id)
+    Ref: Shipment.(order_id) < Order.(id)

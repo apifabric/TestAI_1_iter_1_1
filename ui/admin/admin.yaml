@@ -1,0 +1,371 @@
+about:
+  date: October 23, 2024 04:23:24
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 12
+  number_tables: 13
+info_toggle_checked: true
+resources:
+  Cart:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: product_id
+    - name: quantity
+      required: true
+    description: Represents shopping cart items for customers.
+    info_list: Represents shopping cart items for customers.
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Cart
+    user_key: id
+  Category:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Represents a product category.
+    info_list: Represents a product category.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - category_id
+      name: ProductList
+      resource: Product
+    type: Category
+    user_key: name
+  Customer:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: email
+      required: true
+    - name: phone
+    - name: address
+    - name: id
+    description: Represents customers who purchase products.
+    info_list: Represents customers who purchase products.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - customer_id
+      name: CartList
+      resource: Cart
+    - direction: tomany
+      fks:
+      - customer_id
+      name: OrderList
+      resource: Order
+    - direction: tomany
+      fks:
+      - customer_id
+      name: ReviewList
+      resource: Review
+    type: Customer
+    user_key: name
+  Discount:
+    attributes:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+    - name: product_id
+    - name: discount_percent
+      required: true
+    - name: id
+    description: Represents discounts applicable to products.
+    info_list: Represents discounts applicable to products.
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Discount
+    user_key: description
+  News:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: title
+      required: true
+    - name: content
+      required: true
+    - name: publication_date
+    description: Represents news articles/ads to inform customers about updates and
+      promotions.
+    info_list: Represents news articles/ads to inform customers about updates and
+      promotions.
+    type: News
+    user_key: id
+  Order:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: order_date
+    - name: total_amount
+    description: Represents orders placed by customers.
+    info_list: Represents orders placed by customers.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: tomany
+      fks:
+      - order_id
+      name: PaymentList
+      resource: Payment
+    - direction: tomany
+      fks:
+      - order_id
+      name: ShipmentList
+      resource: Shipment
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Order
+    user_key: id
+  OrderDetail:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+    - name: product_id
+    - name: quantity
+      required: true
+    - name: unit_price
+      required: true
+    - name: line_total
+      required: true
+    description: Represents detailed line items within an order.
+    info_list: Represents detailed line items within an order.
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: OrderDetail
+    user_key: id
+  Payment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+    - name: payment_date
+    - name: amount
+      required: true
+    - name: payment_method
+      required: true
+    description: Represents payments made by customers for orders.
+    info_list: Represents payments made by customers for orders.
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    type: Payment
+    user_key: id
+  Product:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: category_id
+    - name: supplier_id
+    - name: description
+    - name: price
+      required: true
+    - name: stock_quantity
+      required: true
+    - name: id
+    description: Represents food products available for sale.
+    info_list: Represents food products available for sale.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - product_id
+      name: CartList
+      resource: Cart
+    - direction: tomany
+      fks:
+      - product_id
+      name: DiscountList
+      resource: Discount
+    - direction: tomany
+      fks:
+      - product_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: tomany
+      fks:
+      - product_id
+      name: ReviewList
+      resource: Review
+    - direction: toone
+      fks:
+      - category_id
+      name: category
+      resource: Category
+    - direction: toone
+      fks:
+      - supplier_id
+      name: supplier
+      resource: Supplier
+    type: Product
+    user_key: name
+  Promotion:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: start_date
+      required: true
+    - name: end_date
+      required: true
+    - name: description
+    - name: id
+    description: Represents promotional campaigns for marketing.
+    info_list: Represents promotional campaigns for marketing.
+    type: Promotion
+    user_key: name
+  Review:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: product_id
+    - name: rating
+      required: true
+    - name: comment
+    description: Represents customer reviews for products.
+    info_list: Represents customer reviews for products.
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Review
+    user_key: id
+  Shipment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+    - name: shipment_date
+    - name: delivery_date
+    - name: shipment_status
+      required: true
+    description: Represents shipment details for orders.
+    info_list: Represents shipment details for orders.
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    type: Shipment
+    user_key: id
+  Supplier:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: contact_info
+    - name: id
+    description: Represents suppliers of food products.
+    info_list: Represents suppliers of food products.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - supplier_id
+      name: ProductList
+      resource: Product
+    type: Supplier
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

@@ -1,0 +1,24 @@
+<o-form #PromotionForm attr="Promotion_form_insert" service="Promotion" entity="Promotion" 
+keys="id" fxLayout="column" show-header="yes" header-actions="I"
+horizontal-scroll="yes"
+after-insert-mode="new" class="standalone-form-container" (onInsertMode)="onInsertMode()">
+
+<o-row attr="row1" layout-align="start stretch">
+  <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+    
+        <o-text-input #name attr="name" label=" name*" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-date-input #start_date attr="start_date" type="timestamp" label="start_date" editable="no" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+      
+        <o-date-input #end_date attr="end_date" type="timestamp" label="end_date" editable="no" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+      
+        <o-text-input #description attr="description" label="description" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+</div>
+</o-row>
+
+<div layout-padding></div>
+
+</o-form>

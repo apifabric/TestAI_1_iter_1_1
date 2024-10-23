@@ -1,0 +1,30 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="id" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="News_form_edit" 
+        service="News" 
+        entity="News" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-integer-input #id attr="id" label=" id*" type="integer" editable="no" required="no" ></o-integer-input>
+      
+      <o-text-input #title attr="title" label="title" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #content attr="content" label="content" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-date-input #publication_date attr="publication_date" type="timestamp" label="publication_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+      
+    </div>
+  </o-row>
+      
+    </o-form>
+  </o-form-container>
+</div>

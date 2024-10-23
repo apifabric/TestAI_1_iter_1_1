@@ -1,0 +1,574 @@
+about:
+  date: October 23, 2024 04:23:24
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Cart:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: customer_id
+      template: integer
+      type: INTEGER
+    - name: product_id
+      template: integer
+      type: INTEGER
+    - name: quantity
+      required: true
+      template: integer
+      type: INTEGER
+    description: Represents shopping cart items for customers.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents shopping cart items for customers.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Cart
+  Category:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a product category.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents a product category.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - category_id
+      name: ProductList
+      resource: Product
+    type: Category
+  Customer:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: email
+      required: true
+      template: text
+      type: VARCHAR
+    - name: phone
+      template: text
+      type: VARCHAR
+    - name: address
+      template: text
+      type: TEXT
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents customers who purchase products.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents customers who purchase products.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - customer_id
+      name: CartList
+      resource: Cart
+    - direction: tomany
+      fks:
+      - customer_id
+      name: OrderList
+      resource: Order
+    - direction: tomany
+      fks:
+      - customer_id
+      name: ReviewList
+      resource: Review
+    type: Customer
+  Discount:
+    columns:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: product_id
+      template: integer
+      type: INTEGER
+    - name: discount_percent
+      required: true
+      template: real
+      type: FLOAT
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents discounts applicable to products.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: description
+    home_template: home_template.html
+    info_list: Represents discounts applicable to products.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Discount
+  News:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: title
+      required: true
+      template: text
+      type: VARCHAR
+    - name: content
+      required: true
+      template: text
+      type: TEXT
+    - name: publication_date
+      template: date
+      type: DATETIME
+    description: Represents news articles/ads to inform customers about updates and
+      promotions.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents news articles/ads to inform customers about updates and
+      promotions.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: News
+  Order:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: customer_id
+      template: integer
+      type: INTEGER
+    - name: order_date
+      template: date
+      type: DATETIME
+    - name: total_amount
+      template: real
+      type: FLOAT
+    description: Represents orders placed by customers.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents orders placed by customers.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: tomany
+      fks:
+      - order_id
+      name: PaymentList
+      resource: Payment
+    - direction: tomany
+      fks:
+      - order_id
+      name: ShipmentList
+      resource: Shipment
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Order
+  OrderDetail:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: order_id
+      template: integer
+      type: INTEGER
+    - name: product_id
+      template: integer
+      type: INTEGER
+    - name: quantity
+      required: true
+      template: integer
+      type: INTEGER
+    - name: unit_price
+      required: true
+      template: real
+      type: FLOAT
+    - name: line_total
+      required: true
+      template: real
+      type: FLOAT
+    description: Represents detailed line items within an order.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents detailed line items within an order.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: OrderDetail
+  Payment:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: order_id
+      template: integer
+      type: INTEGER
+    - name: payment_date
+      template: date
+      type: DATETIME
+    - name: amount
+      required: true
+      template: real
+      type: FLOAT
+    - name: payment_method
+      required: true
+      template: text
+      type: VARCHAR
+    description: Represents payments made by customers for orders.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents payments made by customers for orders.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    type: Payment
+  Product:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: category_id
+      template: integer
+      type: INTEGER
+    - name: supplier_id
+      template: integer
+      type: INTEGER
+    - name: description
+      template: text
+      type: TEXT
+    - name: price
+      required: true
+      template: real
+      type: FLOAT
+    - name: stock_quantity
+      required: true
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents food products available for sale.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents food products available for sale.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - product_id
+      name: CartList
+      resource: Cart
+    - direction: tomany
+      fks:
+      - product_id
+      name: DiscountList
+      resource: Discount
+    - direction: tomany
+      fks:
+      - product_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: tomany
+      fks:
+      - product_id
+      name: ReviewList
+      resource: Review
+    - direction: toone
+      fks:
+      - category_id
+      name: category
+      resource: Category
+    - direction: toone
+      fks:
+      - supplier_id
+      name: supplier
+      resource: Supplier
+    type: Product
+  Promotion:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: start_date
+      required: true
+      template: date
+      type: DATETIME
+    - name: end_date
+      required: true
+      template: date
+      type: DATETIME
+    - name: description
+      template: text
+      type: TEXT
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents promotional campaigns for marketing.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents promotional campaigns for marketing.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: Promotion
+  Review:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: customer_id
+      template: integer
+      type: INTEGER
+    - name: product_id
+      template: integer
+      type: INTEGER
+    - name: rating
+      required: true
+      template: integer
+      type: INTEGER
+    - name: comment
+      template: text
+      type: TEXT
+    description: Represents customer reviews for products.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents customer reviews for products.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Review
+  Shipment:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: order_id
+      template: integer
+      type: INTEGER
+    - name: shipment_date
+      template: date
+      type: DATETIME
+    - name: delivery_date
+      template: date
+      type: DATETIME
+    - name: shipment_status
+      required: true
+      template: text
+      type: VARCHAR
+    description: Represents shipment details for orders.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents shipment details for orders.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    type: Shipment
+  Supplier:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: contact_info
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents suppliers of food products.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents suppliers of food products.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - supplier_id
+      name: ProductList
+      resource: Product
+    type: Supplier
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false
